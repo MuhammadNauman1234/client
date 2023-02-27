@@ -5,9 +5,15 @@ import axios from 'axios';
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Nav, Navbar } from 'react-bootstrap';
+
 
 const Admin = ()=>{
 
+    const [sideNavOpen, setSideNavOpen] = useState(false);
+    const toggleSideNav = () => {
+  setSideNavOpen(!sideNavOpen);
+   };
     const [users, setUsers] = useState([]);
 
     const getAllUsers = async()=>{
@@ -28,38 +34,20 @@ const Admin = ()=>{
 
     return(
         <>
-           <h3 style={{textAlign:"center",padding:"100px"}}>Welcome to Admin panel</h3>
-
-        
-           <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>Full Name</th>
-          <th>Email</th>
-          <th>Phone Number</th>
-          <th>send Notification</th>
-        </tr>
-      </thead>
-      
-      <tbody>
-        {users.map((user)=>(
-        <tr>
-          <td>{user.name}</td>
-          <td>{user.email}</td>
-          <td>{user.phone}</td>
-          <td>
-            <Button onClick={user(user)} variant="secondary" size="lg" active>
-               <Link style={{color: "white", textDecoration:"none"}} to="/sendNotification">Notification</Link>
-            </Button>
-          </td>
-        </tr>
-        ))}
-      </tbody>
-      
-    </Table>
+          <Nav
+            style={{marginTop:"200px", width: "15%"}}
+            className={`d-md-block sidebar ${sideNavOpen ? 'open' : 'closed'}`} id="sidebar">
+            <div className="sidebar-sticky">
+              <h3>Side Navigation</h3>
+              <Nav.Link href="#">Home</Nav.Link>
+              <Nav.Link href="#">About</Nav.Link>
+              <Nav.Link href="#">Contact</Nav.Link>
+            </div>
+          </Nav>
     
         </>
     )
+
 }
 
 export default Admin;
